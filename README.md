@@ -4,19 +4,19 @@ This is a Conway's Game of Life in command line coded in PHP.
 
 ## How to Run
 
-Unzip sidekicker.zip. Open your terminal, go to sidekicker folder and run:
+Clone or download game-of-life zip file. Unzip. Open your terminal, go to game-of-life folder and run:
 
 ```
 $ php src/console/play.php
 ```
 
-I also added a script to play a glider:
+You might also want to run the script with glider pattern:
 
 ```
 $ php src/console/glider.php
 ```
 
-And, a script to play a lightweight spaceship:
+Or, the script with lightweight spaceship:
 
 ```
 $ php src/console/lwss.php
