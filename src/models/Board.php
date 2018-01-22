@@ -32,7 +32,7 @@ class Board
     }
 
     /**
-     * Initialize board.
+     * Initialize board with dead cells.
      *
      * @return void
      */
@@ -56,6 +56,7 @@ class Board
      */
     public function getCell($x, $y)
     {
+        // calculate new coordinates if cell's outside the board
         $x = ($x+$this->columnCount)%$this->columnCount;
         $y = ($y+$this->rowCount)%$this->rowCount;
 
@@ -69,12 +70,15 @@ class Board
      */
     public function new($density = 0.15)
     {
+        // calculates number of live cells
         $population = round($this->rowCount*$this->columnCount*$density);
 
         for ($i=0; $i<$population; $i++) {
+            // get random coordinates
             $randomX = rand(0, $this->columnCount);
             $randomY = rand(0, $this->rowCount);
 
+            // restore cell
             $this->getCell($randomX, $randomY)->restore();
         }
 
@@ -88,10 +92,19 @@ class Board
      */
     public function play($speed = 0.9)
     {
+        // clears screen
+        system('clear');
+
+        // renders board
         $this->render();
+
+        // set some delays
         usleep(abs(1-$speed)*1000000);
 
+        // calculates next generation
         $this->tick();
+
+        // repeat process
         $this->play($speed);
     }
 
@@ -102,8 +115,6 @@ class Board
      */
     public function render()
     {
-        system('clear');
-
         $line = "";
         for ($y=0; $y<$this->rowCount; $y++) {
             for ($x=0; $x<$this->columnCount; $x++) {
@@ -139,9 +150,12 @@ class Board
         $successor = [];
         for ($y=0; $y<$this->rowCount; $y++) {
             for ($x=0; $x<$this->columnCount; $x++) {
+                $cell = clone $this->getCell($x, $y);
+
+                // counts cell's neighbours
                 $total = (new Neighbour($x, $y, $this))->count();
 
-                $cell = clone $this->getCell($x, $y);
+                // applies game rules
                 if ($total==3) {
                     $cell->restore();
                 } elseif ($total!=4) {
