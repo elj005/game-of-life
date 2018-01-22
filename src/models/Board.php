@@ -63,16 +63,6 @@ class Board
     }
 
     /**
-     * Returns array of models\Cell.
-     *
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
      * Assigns the first generation.
      *
      * @return models\Board
@@ -117,7 +107,7 @@ class Board
         $line = "";
         for ($y=0; $y<$this->rowCount; $y++) {
             for ($x=0; $x<$this->columnCount; $x++) {
-                if ($this->data[$x][$y]->isAlive()) {
+                if ($this->getCell($x, $y)->isAlive()) {
                     $line .= " █ ";
                 } else {
                     $line .= "   ";

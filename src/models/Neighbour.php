@@ -44,6 +44,7 @@ class Neighbour
         foreach ($directions as $direction) {
             list($directionX, $directionY) = $direction;
 
+            // finds cell and checks if alive
             if ($this->find($directionX, $directionY)->isAlive()) {
                 $total++;
             }
