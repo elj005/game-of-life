@@ -43,10 +43,6 @@ class Board
         for ($y=0; $y<$this->rowCount; $y++) {
             for ($x=0; $x<$this->columnCount; $x++) {
                 $data[$x][$y] = new Cell($x, $y);
-
-                if (rand(0, 100)<($this->density*100)) {
-                    $data[$x][$y]->restore();
-                }
             }
         }
 
@@ -74,6 +70,25 @@ class Board
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Assigns the first generation.
+     *
+     * @return models\Board
+     */
+    public function new($density = 0.15)
+    {
+        $population = round($this->rowCount*$this->columnCount*$density);
+
+        for ($i=0; $i<$population; $i++) {
+            $randomX = rand(0, $this->columnCount);
+            $randomY = rand(0, $this->rowCount);
+
+            $this->getCell($randomX, $randomY)->restore();
+        }
+
+        return $this;
     }
 
     /**
